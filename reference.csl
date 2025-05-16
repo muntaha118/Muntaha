@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<style xmlns="http://purl.org/net/xbiblio/csl" class="in-text" version="1.0" demote-non-dropping-particle="sort-only" initialize-with-hyphen="false" page-range-format="minimal">
+  <info>
+    <title>Custom Hybrid Vancouver Style</title>
+    <id>http://www.zotero.org/styles/hybrid-vancouver</id>
+    <link href="http://www.zotero.org/styles/hybrid-vancouver" rel="self"/>
+    <author>
+      <name>Your Name</name>
+    </author>
+    <category citation-format="numeric"/>
+    <summary>Hybrid style matching both journal examples and specified requirements</summary>
+    <updated>2024-02-20T00:00:00+00:00</updated>
+    <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
+  </info>
+  <locale xml:lang="en">
+    <terms>
+      <term name="editor" form="short">(ed.)</term>
+      <term name="editors" form="short">(eds.)</term>
+      <term name="available at">[Online]</term>
+      <term name="edition" form="short">ed.</term>
+    </terms>
+  </locale>
+  
+  <macro name="author">
+    <names variable="author">
+      <name delimiter=", " and="text" name-as-sort-order="all" sort-separator=" "/>
+      <substitute>
+        <names variable="editor">
+          <name delimiter=", " and="text" name-as-sort-order="all" sort-separator=" "/>
+          <label form="short" prefix=" " suffix="."/>
+        </names>
+      </substitute>
+    </names>
+  </macro>
+
+  <macro name="title">
+    <choose>
+      <if type="article-journal">
+        <text variable="title" suffix="."/>
+      </if>
+      <else>
+        <text variable="title" font-style="italic" suffix="."/>
+      </else>
+    </choose>
+  </macro>
+
+  <macro name="journal-info">
+    <if type="article-journal">
+      <text variable="container-title" suffix="."/>
+    </if>
+  </macro>
+
+  <macro name="series-info">
+    <if type="book chapter report" match="any">
+      <group prefix=", " delimiter=", ">
+        <text variable="collection-title"/>
+        <text variable="volume"/>
+      </group>
+    </if>
+  </macro>
+
+  <macro name="edition-info">
+    <if type="book chapter report" match="any">
+      <choose>
+        <if is-numeric="edition">
+          <group prefix=", " delimiter=" ">
+            <number variable="edition" form="ordinal"/>
+            <text term="edition" form="short"/>
+          </group>
+        </if>
+        <else>
+          <text variable="edition" prefix=", "/>
+        </else>
+      </choose>
+    </if>
+  </macro>
+
+  <macro name="online-info">
+    <if variable="URL">
+      <text term="available at" prefix=", "/>
+    </if>
+  </macro>
+
+  <macro name="publisher-info">
+    <if type="book report" match="any">
+      <group delimiter=", ">
+        <text variable="publisher-place"/>
+        <text variable="publisher"/>
+      </group>
+    </if>
+  </macro>
+
+  <macro name="date">
+    <date variable="issued">
+      <date-part name="year"/>
+    </date>
+  </macro>
+
+  <macro name="journal-details">
+    <if type="article-journal">
+      <group delimiter=" " suffix=".">
+        <text macro="date"/>
+        <group delimiter="(">
+          <text variable="volume"/>
+          <text variable="issue" suffix=")"/>
+        </group>
+        <group prefix=": p. ">
+          <text variable="page"/>
+        </group>
+      </group>
+    </if>
+  </macro>
+
+  <citation collapse="citation-number">
+    <sort>
+      <key variable="citation-number"/>
+    </sort>
+    <layout prefix="[" suffix="]">
+      <text variable="citation-number"/>
+    </layout>
+  </citation>
+
+  <bibliography et-al-min="3" et-al-use-first="1">
+    <layout>
+      <text variable="citation-number" suffix=". "/>
+      <group delimiter=". ">
+        <text macro="author"/>
+        <text macro="title"/>
+        <text macro="journal-info"/>
+        <text macro="series-info"/>
+        <text macro="edition-info"/>
+        <text macro="online-info"/>
+        <text macro="publisher-info"/>
+        <group>
+          <text macro="date"/>
+          <text macro="journal-details"/>
+        </group>
+      </group>
+    </layout>
+  </bibliography>
+</style>
